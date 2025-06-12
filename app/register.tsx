@@ -61,15 +61,17 @@ export default function login(){
         setIsSubmit(true);
         if(password.length >= 4 && email && name){
             console.log('登録処理')
+            let reqfamilyCode;
             if(!familyCode){
-                setFamilyCode("nul")
+                reqfamilyCode="null"
             }
+            console.log(JSON.stringify({name,email,password,familyCode:reqfamilyCode}))
             // const res = await fetch('https://kajikashi.onrender.com/api/auth/login',{
             const res = await fetch('http://192.168.0.12:8080/api/auth/register',{
                 method: "POST",
                 credentials: "include",
                 headers: {'Content-Type': 'application/json'},
-                body:JSON.stringify({name,email,password,familyCode})
+                body:JSON.stringify({name,email,password,familyCode:reqfamilyCode})
             })
             console.log(res)
             if(res.ok){
