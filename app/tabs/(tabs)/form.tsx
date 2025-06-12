@@ -1,20 +1,10 @@
-import EditScreenInfo from "@/components/EditScreenInfo";
-import { Center } from "@/components/ui/center";
-import { Divider } from "@/components/ui/divider";
-import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import {ScrollView, View} from "react-native";
 import {Header} from "@/components/Header";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useState} from "react";
 import {VStack} from "@/components/ui/vstack";
 import * as SecureStore from "expo-secure-store";
-import {getWeekRange} from "@/components/utils/getWeekRange";
 import {useFocusEffect, useRouter} from "expo-router";
-import { ChevronDownIcon } from "@/components/ui/icon"
-import {
-    Select, SelectBackdrop, SelectContent, SelectDragIndicator,
-    SelectDragIndicatorWrapper, SelectIcon, SelectInput, SelectItem, SelectPortal, SelectTrigger
-} from "@/components/ui/select";
 import {FormControl, FormControlLabel, FormControlLabelText} from "@/components/ui/form-control";
 import {Picker} from "@react-native-picker/picker";
 import {Button, ButtonText} from "@/components/ui/button";
@@ -37,13 +27,12 @@ export default function Form() {
         }
     }
     useFocusEffect(
-
         useCallback(() => {
             (async ()=>{
                 const token = await SecureStore.getItemAsync('sessionToken')
                 if(token){
-                    // const getAuth = await fetch("https://kajikashi.onrender.com/api/auth/me",{
-                    const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
+                    const getAuth = await fetch("https://kajikashi.onrender.com/api/auth/me",{
+                    // const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
                         headers:{'Authorization': `Bearer ${token}`},
                         method: "GET"
                     })
@@ -52,7 +41,8 @@ export default function Form() {
                     }else{
                         const userdata = await getAuth.json()
                         setUserInfo(userdata)
-                        const getTaskList = await fetch('http://192.168.0.12:8080/api/tasks',{
+                        const getTaskList = await fetch("https://kajikashi.onrender.com/api/tasks",{
+                        // const getTaskList = await fetch('http://192.168.0.12:8080/api/tasks',{
                             headers:{'Authorization': `Bearer ${token}`},
                             method: "GET"
                         })
@@ -86,7 +76,8 @@ export default function Form() {
     }
     const handleTaskRegister = async() => {
         if(selectedTaskName){
-            const res = await fetch('http://192.168.0.12:8080/api/tasks',{
+            const res = await fetch("https://kajikashi.onrender.com/api/tasks",{
+            // const res = await fetch('http://192.168.0.12:8080/api/tasks',{
                 method: "POST",
                 credentials: "include",
                 headers: {'Content-Type': 'application/json'},

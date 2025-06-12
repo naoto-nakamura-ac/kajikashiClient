@@ -3,8 +3,6 @@ import {ScrollView} from "react-native";
 import React, {useCallback, useEffect, useState} from "react";
 import * as SecureStore from 'expo-secure-store'
 import {useFocusEffect, useRouter} from "expo-router";
-import {HStack} from "@/components/ui/hstack";
-import {Image} from "@/components/ui/image";
 import {Button, ButtonText} from "@/components/ui/button";
 import {VStack} from "@/components/ui/vstack";
 import {Header} from "@/components/Header";
@@ -14,7 +12,6 @@ import {Email} from "@/components/Email";
 import {Toast, ToastDescription, ToastTitle, useToast} from "@/components/ui/toast";
 
 export default function login(){
-    // console.log('hogeeeeee')
     const router = useRouter();
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -33,8 +30,8 @@ export default function login(){
             (async ()=>{
                 const token = await SecureStore.getItemAsync('sessionToken')
                 if(token){
-                    // const getAuth = await fetch("https://kajikashi.onrender.com/api/auth/me",{
-                    const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
+                    const getAuth = await fetch("https://kajikashi.onrender.com/api/auth/me",{
+                    // const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
                         headers:{'Authorization': `Bearer ${token}`},
                         method: "GET"
                     })
@@ -50,8 +47,8 @@ export default function login(){
         setIsSubmit(true);
         if(password.length >= 4 && email){
             console.log('ログイン処理')
-            // const res = await fetch('https://kajikashi.onrender.com/api/auth/login',{
-            const res = await fetch('http://192.168.0.12:8080/api/auth/login',{
+            const res = await fetch('https://kajikashi.onrender.com/api/auth/login',{
+            // const res = await fetch('http://192.168.0.12:8080/api/auth/login',{
                 method: "POST",
                 credentials: "include",
                 headers: {'Content-Type': 'application/json'},
@@ -94,24 +91,22 @@ export default function login(){
             >
                 <Box className="flex flex-1  mx-5 lg:my-24 lg:mx-32">
                     <Header />
-                    {/*<Box className="flex-1 justify-center items-center w-[300px]">*/}
-                        <VStack className='gap-10 w-[300px] justify-center items-center'>
-                            <Text className='font-bold text-3xl' style={{color: '#333333'}}>ログイン</Text>
-                            <Email value={email} onChangeValue={setEmail} isInvalid={isInvalidEmail} />
-                            <Password
-                                value={password}
-                                onChangeValue={setPassword}
-                                isInvalid={isInvalid}
-                            />
+                    <VStack className='gap-10 w-[300px] justify-center items-center'>
+                        <Text className='font-bold text-3xl' style={{color: '#333333'}}>ログイン</Text>
+                        <Email value={email} onChangeValue={setEmail} isInvalid={isInvalidEmail} />
+                        <Password
+                            value={password}
+                            onChangeValue={setPassword}
+                            isInvalid={isInvalid}
+                        />
 
-                            <Button className="w-[250px] h-[48px] rounded-full" style={{backgroundColor:'#4CAF50'}} onPress={handleLogin}>
-                                <ButtonText className="text-xl font-bold" style={{color:'#333333'}}>LOGIN</ButtonText>
-                            </Button>
-                            <Button className="w-[250px] h-[48px] rounded-full" variant='outline' style={{borderColor:'#4CAF50',backgroundColor:'#F5F5F5'}} onPress={() => router.push('/register')}>
-                                <ButtonText className="text-xl font-bold" style={{color:'#333333'}}>新規登録</ButtonText>
-                            </Button>
-                        </VStack>
-                    {/*</Box>*/}
+                        <Button className="w-[250px] h-[48px] rounded-full" style={{backgroundColor:'#4CAF50'}} onPress={handleLogin}>
+                            <ButtonText className="text-xl font-bold" style={{color:'#333333'}}>LOGIN</ButtonText>
+                        </Button>
+                        <Button className="w-[250px] h-[48px] rounded-full" variant='outline' style={{borderColor:'#4CAF50',backgroundColor:'#F5F5F5'}} onPress={() => router.push('/register')}>
+                            <ButtonText className="text-xl font-bold" style={{color:'#333333'}}>新規登録</ButtonText>
+                        </Button>
+                    </VStack>
                 </Box>
             </ScrollView>
         </Box>

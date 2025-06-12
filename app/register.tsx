@@ -1,11 +1,9 @@
 import {Box} from "@/components/ui/box";
-import {Platform, ScrollView} from "react-native";
+import {Platform} from "react-native";
 import {SafeAreaView} from 'react-native-safe-area-context'
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useState} from "react";
 import * as SecureStore from 'expo-secure-store'
 import {useFocusEffect, useRouter} from "expo-router";
-import {HStack} from "@/components/ui/hstack";
-import {Image} from "@/components/ui/image";
 import {Button, ButtonText} from "@/components/ui/button";
 import {VStack} from "@/components/ui/vstack";
 import {Header} from "@/components/Header";
@@ -23,7 +21,6 @@ import {FamilyCodeInput} from "@/components/FamilyCodeInput";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 
 export default function login(){
-    // console.log('hogeeeeee')
     const router = useRouter();
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -47,7 +44,8 @@ export default function login(){
                 const token = await SecureStore.getItemAsync('sessionToken')
                 console.log('token:',token)
                 if(token){
-                    const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
+                    const getAuth = await fetch("https://kajikashi.onrender.com/api/auth/me",{
+                    // const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
                         headers:{'Authorization': `Bearer ${token}`},
                         method: "GET"
                     })
@@ -69,8 +67,8 @@ export default function login(){
                 reqfamilyCode="null"
             }
             console.log(JSON.stringify({name,email,password,familyCode:reqfamilyCode}))
-            // const res = await fetch('https://kajikashi.onrender.com/api/auth/login',{
-            const res = await fetch('http://192.168.0.12:8080/api/auth/register',{
+            const res = await fetch('https://kajikashi.onrender.com/api/auth/register',{
+            // const res = await fetch('http://192.168.0.12:8080/api/auth/register',{
                 method: "POST",
                 credentials: "include",
                 headers: {'Content-Type': 'application/json'},
@@ -110,43 +108,34 @@ export default function login(){
         })
     }
     return (
-            <KeyboardAwareScrollView
-                contentContainerStyle={{ flexGrow: 1 }}
-                enableOnAndroid={true}
-                keyboardShouldPersistTaps="handled"
-                extraScrollHeight={Platform.OS === 'ios' ? 20 : 100}
-                extraHeight={Platform.OS === 'ios' ? 20 : 100}
-            >
-        <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
-        <Box className="flex-1" style={{backgroundColor: '#F5F5F5'}}>
-            {/*<ScrollView*/}
-            {/*    style={{ height: "100%" }}*/}
-            {/*    contentContainerStyle={{ flexGrow: 1,justifyContent: 'center', alignItems: 'center' }}*/}
-            {/*>*/}
-                <Box className="flex flex-1  mx-5 lg:my-24 lg:mx-32">
-                    <Header />
-                    {/*<Box className="flex-1 justify-center items-center w-[300px]">*/}
-                    <VStack className='gap-5 w-[300px] justify-center items-center'>
-                        <Text className='font-bold text-3xl' style={{color: '#333333'}}>新規登録</Text>
-                        <NameInput value={name} onChangeValue={setName} isInvalid={isInvalidName} />
-                        <Email value={email} onChangeValue={setEmail} isInvalid={isInvalidEmail} />
-                        <Password
-                            value={password}
-                            onChangeValue={setPassword}
-                            isInvalid={isInvalid}
-                        />
-                        <FamilyCodeInput value={familyCode} onChangeValue={setFamilyCode}/>
-
-
-                        <Button className="w-[250px] h-[48px] rounded-full" style={{backgroundColor:'#4CAF50'}} onPress={handleRegister}>
-                            <ButtonText className="text-xl font-bold" style={{color:'#333333'}}>新規登録</ButtonText>
-                        </Button>
-                    </VStack>
-                    {/*</Box>*/}
+        <KeyboardAwareScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            enableOnAndroid={true}
+            keyboardShouldPersistTaps="handled"
+            extraScrollHeight={Platform.OS === 'ios' ? 20 : 100}
+            extraHeight={Platform.OS === 'ios' ? 20 : 100}
+        >
+            <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
+                <Box className="flex-1" style={{backgroundColor: '#F5F5F5'}}>
+                    <Box className="flex flex-1  mx-5 lg:my-24 lg:mx-32">
+                        <Header />
+                        <VStack className='gap-5 w-[300px] justify-center items-center'>
+                            <Text className='font-bold text-3xl' style={{color: '#333333'}}>新規登録</Text>
+                            <NameInput value={name} onChangeValue={setName} isInvalid={isInvalidName} />
+                            <Email value={email} onChangeValue={setEmail} isInvalid={isInvalidEmail} />
+                            <Password
+                                value={password}
+                                onChangeValue={setPassword}
+                                isInvalid={isInvalid}
+                            />
+                            <FamilyCodeInput value={familyCode} onChangeValue={setFamilyCode}/>
+                            <Button className="w-[250px] h-[48px] rounded-full" style={{backgroundColor:'#4CAF50'}} onPress={handleRegister}>
+                                <ButtonText className="text-xl font-bold" style={{color:'#333333'}}>新規登録</ButtonText>
+                            </Button>
+                        </VStack>
+                    </Box>
                 </Box>
-            {/*</ScrollView>*/}
-        </Box>
-        </SafeAreaView>
+            </SafeAreaView>
         </KeyboardAwareScrollView>
     );
 }

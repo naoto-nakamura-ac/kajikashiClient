@@ -1,21 +1,14 @@
-import EditScreenInfo from "@/components/EditScreenInfo";
-import { Center } from "@/components/ui/center";
 import { Divider } from "@/components/ui/divider";
-import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import {ScrollView, View} from "react-native";
 import {Header} from "@/components/Header";
 import React, {useCallback, useState} from "react";
 import {VStack} from "@/components/ui/vstack";
-import {FormControl, FormControlLabel, FormControlLabelText} from "@/components/ui/form-control";
-import {Picker} from "@react-native-picker/picker";
-import {Button, ButtonText} from "@/components/ui/button";
 import {useFocusEffect, useRouter} from "expo-router";
 import * as SecureStore from "expo-secure-store";
 import {getWeekRange} from "@/components/utils/getWeekRange";
 import {format} from "date-fns";
 import { toZonedTime} from 'date-fns-tz';
-import { ja } from 'date-fns/locale';
 
 export default function TaskAll() {
     const router = useRouter()
@@ -26,8 +19,8 @@ export default function TaskAll() {
             (async ()=>{
                 const token = await SecureStore.getItemAsync('sessionToken')
                 if(token){
-                    // const getAuth = await fetch("https://kajikashi.onrender.com/api/auth/me",{
-                    const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
+                    const getAuth = await fetch("https://kajikashi.onrender.com/api/auth/me",{
+                    // const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
                         headers:{'Authorization': `Bearer ${token}`},
                         method: "GET"
                     })
@@ -37,7 +30,8 @@ export default function TaskAll() {
                         const data = await getAuth.json()
                         setUserInfo(data)
                         const thisWeek = getWeekRange(0)
-                        const getTaskLog = await fetch(`http://192.168.0.12:8080/api/tasks/log?familyId=${data.familyID}&from=1900-01-01&to=${thisWeek.to}`,{
+                        const getTaskLog = await fetch(`https://kajikashi.onrender.com/api/tasks/log?familyId=${data.familyID}&from=1900-01-01&to=${thisWeek.to}`,{
+                        // const getTaskLog = await fetch(`http://192.168.0.12:8080/api/tasks/log?familyId=${data.familyID}&from=1900-01-01&to=${thisWeek.to}`,{
                             headers:{'Authorization': `Bearer ${token}`},
                             method: "GET"
                         })

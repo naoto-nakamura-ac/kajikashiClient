@@ -1,7 +1,3 @@
-import EditScreenInfo from "@/components/EditScreenInfo";
-import { Center } from "@/components/ui/center";
-import { Divider } from "@/components/ui/divider";
-import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import {Header} from "@/components/Header";
 import {Dimensions, ScrollView, View} from "react-native";
@@ -9,7 +5,6 @@ import React, {useCallback, useEffect, useState} from "react";
 import {VStack} from "@/components/ui/vstack";
 import {Card} from "@/components/ui/card";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {Button, ButtonText} from "@/components/ui/button";
 import {useFocusEffect, useRouter} from "expo-router";
 import * as SecureStore from "expo-secure-store";
 import {getWeekRange} from "@/components/utils/getWeekRange";
@@ -29,8 +24,8 @@ export default function Home() {
             (async ()=>{
                 const token = await SecureStore.getItemAsync('sessionToken')
                 if(token){
-                    // const getAuth = await fetch("https://kajikashi.onrender.com/api/auth/me",{
-                    const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
+                    const getAuth = await fetch("https://kajikashi.onrender.com/api/auth/me",{
+                    // const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
                         headers:{'Authorization': `Bearer ${token}`},
                         method: "GET"
                     })
@@ -40,7 +35,8 @@ export default function Home() {
                         const data = await getAuth.json()
                         setUserInfo(data)
                         const thisWeek = getWeekRange(0)
-                        const getSummary = await fetch(`http://192.168.0.12:8080/api/summary?familyId=${data.familyID}&from=${thisWeek.from}&to=${thisWeek.to}`,{
+                        const getSummary = await fetch(`https://kajikashi.onrender.com/api/summary?familyId=${data.familyID}&from=${thisWeek.from}&to=${thisWeek.to}`,{
+                        // const getSummary = await fetch(`http://192.168.0.12:8080/api/summary?familyId=${data.familyID}&from=${thisWeek.from}&to=${thisWeek.to}`,{
                             headers:{'Authorization': `Bearer ${token}`},
                             method: "GET"
                         })
@@ -49,7 +45,8 @@ export default function Home() {
                         setSummary(summaryData)
 
                         const lastWeek = getWeekRange(-1)
-                        const getLastSummary = await fetch(`http://192.168.0.12:8080/api/summary?familyId=${data.familyID}&from=${lastWeek.from}&to=${lastWeek.to}`,{
+                        const getLastSummary = await fetch(`https://kajikashi.onrender.com/api/summary?familyId=${data.familyID}&from=${lastWeek.from}&to=${lastWeek.to}`,{
+                        // const getLastSummary = await fetch(`http://192.168.0.12:8080/api/summary?familyId=${data.familyID}&from=${lastWeek.from}&to=${lastWeek.to}`,{
                             headers:{'Authorization': `Bearer ${token}`},
                             method: "GET"
                         })

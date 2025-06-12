@@ -1,6 +1,3 @@
-import EditScreenInfo from "@/components/EditScreenInfo";
-import { Center } from "@/components/ui/center";
-import { Divider } from "@/components/ui/divider";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import {ScrollView, View} from "react-native";
@@ -21,8 +18,8 @@ export default function Profile() {
         (async ()=>{
             const token = await SecureStore.getItemAsync('sessionToken')
             if(token){
-                // const getAuth = await fetch("https://kajikashi.onrender.com/api/auth/me",{
-                const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
+                const getAuth = await fetch("https://kajikashi.onrender.com/api/auth/me",{
+                // const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
                     headers:{'Authorization': `Bearer ${token}`},
                     method: "GET"
                 })
@@ -31,7 +28,8 @@ export default function Profile() {
                 }else{
                     const data = await getAuth.json()
                     setUserInfo(data)
-                    const getFamily = await fetch(`http://192.168.0.12:8080/api/family?familyID=${data.familyID}`,{
+                    const getFamily = await fetch(`https://kajikashi.onrender.com/api/family?familyID=${data.familyID}`,{
+                    // const getFamily = await fetch(`http://192.168.0.12:8080/api/family?familyID=${data.familyID}`,{
                         headers:{'Authorization': `Bearer ${token}`},
                         method: "GET"
                     })
@@ -45,7 +43,8 @@ export default function Profile() {
 
     const handleLogout = async () =>{
         const token = await SecureStore.getItemAsync('sessionToken')
-        const res = await fetch('http://192.168.0.12:8080/api/auth/logout',{
+        const res = await fetch('https://kajikashi.onrender.com/api/auth/logout',{
+        // const res = await fetch('http://192.168.0.12:8080/api/auth/logout',{
             method: "DELETE",
             credentials: "include",
             headers: {
@@ -53,7 +52,6 @@ export default function Profile() {
                 'Authorization': `Bearer ${token}`
             },
         })
-        // await SecureStore.deleteItemAsync('sessionToken')
         router.push('/login')
     }
     return (
