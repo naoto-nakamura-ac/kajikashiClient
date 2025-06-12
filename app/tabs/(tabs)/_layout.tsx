@@ -33,14 +33,14 @@ export default function TabLayout() {
             name="form"
             options={{
                 title: "記録",
-                tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,
+                tabBarIcon: ({ color }) => <TabBarIcon name="pencil" color={color} />,
             }}
         />
         <Tabs.Screen
             name="taskAll"
             options={{
               title: "実績詳細",
-              tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,
+              tabBarIcon: ({ color }) => <TabBarIcon name="file-text" color={color} />,
             }}
         />
         <Tabs.Screen

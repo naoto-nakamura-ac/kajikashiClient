@@ -1,8 +1,8 @@
 import {Box} from "@/components/ui/box";
 import {ScrollView} from "react-native";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import * as SecureStore from 'expo-secure-store'
-import {useRouter} from "expo-router";
+import {useFocusEffect, useRouter} from "expo-router";
 import {HStack} from "@/components/ui/hstack";
 import {Image} from "@/components/ui/image";
 import {Button, ButtonText} from "@/components/ui/button";
@@ -28,21 +28,23 @@ export default function login(){
             showNewToast()
         }
     }
-    useEffect(() => {
-        (async ()=>{
-            const token = await SecureStore.getItemAsync('sessionToken')
-            if(token){
-                // const getAuth = await fetch("https://kajikashi.onrender.com/api/auth/me",{
-                const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
-                    headers:{'Authorization': `Bearer ${token}`},
-                    method: "GET"
-                })
-                if(getAuth.ok){
-                    router.push('/home')
+    useFocusEffect(
+        useCallback(() => {
+            (async ()=>{
+                const token = await SecureStore.getItemAsync('sessionToken')
+                if(token){
+                    // const getAuth = await fetch("https://kajikashi.onrender.com/api/auth/me",{
+                    const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
+                        headers:{'Authorization': `Bearer ${token}`},
+                        method: "GET"
+                    })
+                    if(getAuth.ok){
+                        router.push('/tabs/(tabs)/home')
+                    }
                 }
-            }
-        })()
-    }, []);
+            })()
+        }, [])
+    )
 
     const handleLogin= async ()=>{
         setIsSubmit(true);
@@ -58,7 +60,7 @@ export default function login(){
             if(res.ok){
                 const resData = await res.json()
                 await SecureStore.setItemAsync('sessionToken',resData.token)
-                router.push('/home')
+                router.push('/tabs/(tabs)/home')
             }else{
                 handleToast()
             }

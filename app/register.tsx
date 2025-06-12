@@ -1,8 +1,9 @@
 import {Box} from "@/components/ui/box";
-import {ScrollView} from "react-native";
-import React, {useEffect, useState} from "react";
+import {Platform, ScrollView} from "react-native";
+import {SafeAreaView} from 'react-native-safe-area-context'
+import React, {useCallback, useEffect, useState} from "react";
 import * as SecureStore from 'expo-secure-store'
-import {useRouter} from "expo-router";
+import {useFocusEffect, useRouter} from "expo-router";
 import {HStack} from "@/components/ui/hstack";
 import {Image} from "@/components/ui/image";
 import {Button, ButtonText} from "@/components/ui/button";
@@ -19,6 +20,7 @@ import {
     ToastDescription,
 } from "@/components/ui/toast"
 import {FamilyCodeInput} from "@/components/FamilyCodeInput";
+import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 
 export default function login(){
     // console.log('hogeeeeee')
@@ -39,23 +41,24 @@ export default function login(){
             showNewToast()
         }
     }
+    useFocusEffect(
+        useCallback(() => {
+            (async ()=>{
+                const token = await SecureStore.getItemAsync('sessionToken')
+                console.log('token:',token)
+                if(token){
+                    const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
+                        headers:{'Authorization': `Bearer ${token}`},
+                        method: "GET"
+                    })
 
-    useEffect(() => {
-        (async ()=>{
-            const token = await SecureStore.getItemAsync('sessionToken')
-            console.log('token:',token)
-            if(token){
-                const getAuth = await fetch('http://192.168.0.12:8080/api/auth/me',{
-                    headers:{'Authorization': `Bearer ${token}`},
-                    method: "GET"
-                })
-
-                if(getAuth.ok){
-                    router.push('/home')
+                    if(getAuth.ok){
+                        router.push('/tabs/(tabs)/home')
+                    }
                 }
-            }
-        })()
-    }, []);
+            })()
+        }, [])
+    )
 
     const handleRegister= async ()=>{
         setIsSubmit(true);
@@ -73,12 +76,12 @@ export default function login(){
                 headers: {'Content-Type': 'application/json'},
                 body:JSON.stringify({name,email,password,familyCode:reqfamilyCode})
             })
-            console.log(res)
+            // console.log(res)
             if(res.ok){
                 const resData = await res.json()
                 console.log(resData)
                 await SecureStore.setItemAsync('sessionToken',resData.token)
-                router.push('/home')
+                router.push('/tabs/(tabs)/home')
             }else{
                 handleToast()
             }
@@ -107,11 +110,19 @@ export default function login(){
         })
     }
     return (
-        <Box className="flex-1" style={{backgroundColor: '#F5F5F5'}}>
-            <ScrollView
-                style={{ height: "100%" }}
-                contentContainerStyle={{ flexGrow: 1,justifyContent: 'center', alignItems: 'center' }}
+            <KeyboardAwareScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                enableOnAndroid={true}
+                keyboardShouldPersistTaps="handled"
+                extraScrollHeight={Platform.OS === 'ios' ? 20 : 100}
+                extraHeight={Platform.OS === 'ios' ? 20 : 100}
             >
+        <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
+        <Box className="flex-1" style={{backgroundColor: '#F5F5F5'}}>
+            {/*<ScrollView*/}
+            {/*    style={{ height: "100%" }}*/}
+            {/*    contentContainerStyle={{ flexGrow: 1,justifyContent: 'center', alignItems: 'center' }}*/}
+            {/*>*/}
                 <Box className="flex flex-1  mx-5 lg:my-24 lg:mx-32">
                     <Header />
                     {/*<Box className="flex-1 justify-center items-center w-[300px]">*/}
@@ -133,7 +144,9 @@ export default function login(){
                     </VStack>
                     {/*</Box>*/}
                 </Box>
-            </ScrollView>
+            {/*</ScrollView>*/}
         </Box>
+        </SafeAreaView>
+        </KeyboardAwareScrollView>
     );
 }

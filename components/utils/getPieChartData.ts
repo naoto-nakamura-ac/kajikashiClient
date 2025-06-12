@@ -39,10 +39,11 @@ export const getPieChartData= (userName: string, summaries: SummaryResponse[]): 
         return [];
     }
 
-    return userData.byCategory.map(({ category, point }) => ({
+    return userData.byCategory.map(({ category, point },index) => ({
         name: category,
         population: point,
-        color: getColorFromCategory(category),
+        // color: getColorFromCategory(category),
+        color: COLORS[index],
         legendFontColor: "#333333",
         legendFontSize: 15
     }));
