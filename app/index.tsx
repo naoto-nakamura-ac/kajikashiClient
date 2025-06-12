@@ -10,11 +10,11 @@ import { Text } from "@/components/ui/text";
 import {Image} from "@/components/ui/image";
 // import AppTitle from '../assets/images/AppName.png';
 
-
 import { Link } from "expo-router";
 import {HStack} from "@/components/ui/hstack";
 import {Button, ButtonText} from "@/components/ui/button";
 import {useRouter} from "expo-router";
+import {ToastProvider} from "@gluestack-ui/toast";
 
 // const FeatureCard = ({ iconSvg: IconSvg, name, desc }: any) => {
 //   return (
