@@ -9,7 +9,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { useColorScheme } from "@/components/useColorScheme";
-import { Slot } from "expo-router";
+import {Slot, Stack} from "expo-router";
 
 import "../global.css";
 
@@ -61,7 +61,15 @@ function RootLayoutNav() {
   return (
     <GluestackUIProvider mode={colorScheme === "dark" ? "dark" : "light"}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme} >
+        <Stack
+            screenOptions={{
+              gestureEnabled: true, // ← これが左スワイプ戻りを有効にする
+              headerShown: false,    // 戻るボタンも表示したいならtrue
+            }}
+        >
+
         <Slot />
+        </Stack>
       </ThemeProvider>
     </GluestackUIProvider>
   );

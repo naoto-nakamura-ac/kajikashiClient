@@ -105,7 +105,7 @@ export default function login(){
                             <Button className="w-[250px] h-[48px] rounded-full" style={{backgroundColor:'#4CAF50'}} onPress={handleLogin}>
                                 <ButtonText className="text-xl font-bold" style={{color:'#333333'}}>LOGIN</ButtonText>
                             </Button>
-                            <Button className="w-[250px] h-[48px] rounded-full" style={{borderColor:'#4CAF50'}} onPress={() => router.push('/register')}>
+                            <Button className="w-[250px] h-[48px] rounded-full" variant='outline' style={{borderColor:'#4CAF50',backgroundColor:'#F5F5F5'}} onPress={() => router.push('/register')}>
                                 <ButtonText className="text-xl font-bold" style={{color:'#333333'}}>新規登録</ButtonText>
                             </Button>
                         </VStack>

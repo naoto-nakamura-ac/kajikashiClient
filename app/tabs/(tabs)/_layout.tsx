@@ -16,31 +16,41 @@ export default function TabLayout() {
       screenOptions={{
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
+        // headerShown: useClientOnlyValue(false, true),
+          headerShown: false,
+          tabBarStyle: { backgroundColor: '#F5F5F5' },
+          tabBarActiveTintColor: '#4CAF50',
       }}
     >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Expo V3",
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-        }}
-      />
+        <Tabs.Screen
+            name="home"
+            options={{
+            title: "HOME",
+            tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+            }}
+        />
+        <Tabs.Screen
+            name="form"
+            options={{
+                title: "記録",
+                tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,
+            }}
+        />
+        <Tabs.Screen
+            name="taskAll"
+            options={{
+              title: "実績詳細",
+              tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,
+            }}
+        />
+        <Tabs.Screen
+            name="profile"
+            options={{
+                title: "Profile",
+                tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+            }}
+        />
 
-      <Tabs.Screen
-        name="tab1"
-        options={{
-          title: "Tab 1",
-          tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="tab2"
-        options={{
-          title: "Tab 2",
-          tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,
-        }}
-      />
     </Tabs>
   );
 }
