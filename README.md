@@ -1,36 +1,56 @@
-# Welcome to your Expo app 👋
+# カジカシ(クライアント)
+アプリURL；https://kajikashi.onrender.com/
 
-This is an [Expo](https://expo.dev) project created with [`create-gluestack-app`](https://www.npmjs.com/package/create-gluestack).
+現状、Expo Goを使ったアプリ配信となっています。
+お手数ですが、GooglePley ,AppStoreからExpo Goをインストールしていただきアプリ内でQRコードを読み取ってください。
+- [GooglPlay](https://play.google.com/store/apps/details?id=host.exp.exponent&referrer=www)
+- [AppStore](https://itunes.apple.com/app/apple-store/id982107779)
 
-## Get started
+いつかアプリ単体でストア配信できたらいいな・・・
 
-1. Start the app
+バックエンド側リポジトリ:https://github.com/naoto-nakamura-ac/kajikashi.git
+- バックエンド側アプリの構築はこちらのリポジトリを参考にしてください
+# サービス概要
+家族の中でお互いの家事を見える化しスコアとして算出するアプリです。
+少しでも夫婦、家族間ですれ違いがなくなることを祈ってます。
 
-   ```bash
-    npm run start
+# 使用技術
+## Backend
+- Kotlin
+- SpringBoot
+## FrontEnd
+- ReactNative
+- Gluestack-UI
+- Expo
+## Enviroment
+- Render (API Server)
+- Expo GO (MobileApp Deploy)
+## DataBase
+- Postgresql 14
+# Setup
+1. リポジトリをローカル環境にCloneする
+    ```
+    https://github.com/naoto-nakamura-ac/kajikashiClient.git
+    ```
+   - IntelliJ,Node.jsはインストール、セットアップ済み前提
+2. 依存関係をインストールする
+   ```
+   npm install
+   ```
+3. CLIツールをインストールする
+   ```
+   npm install eas-cli 
+   ```
+- Expo起動したり、Publishするのに必要
+4. Expoをローカル環境で起動する
+   ```
+   npx expo start
+   // キャッシュをクリアしたい場合
+   npx expo start --clear
+   ```
+   - コンソールに出てくるQRコードを実機のExpoGoアプリで読み込めば実機でテストできる
+5. Expo クラウドにPublishする
+   ```
+   $ eas update --branch main --message ""     
    ```
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-- [Nativewind](https://www.nativewind.dev/): Nativewind is a utility-first library for building native apps with Tailwind CSS.
-- [Gluestack](https://gluestack.io/): Gluestack is a component library for building native apps with Tailwind CSS.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [gluestack-ui on GitHub](https://github.com/gluestack/gluestack-ui): View our open source ui library and contribute.
-- [gluestack community](https://discord.com/channels/1050761204852858900/1336392784168484914): Chat with gluestack users and ask questions.
