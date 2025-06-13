@@ -65,6 +65,8 @@ export default function login(){
             let reqfamilyCode;
             if(!familyCode){
                 reqfamilyCode="null"
+            }else{
+                reqfamilyCode = familyCode
             }
             console.log(JSON.stringify({name,email,password,familyCode:reqfamilyCode}))
             const res = await fetch('https://kajikashi.onrender.com/api/auth/register',{
